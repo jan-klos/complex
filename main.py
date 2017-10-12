@@ -1,5 +1,6 @@
 import random
 from johnson import johnson
+from tree import create_tree, print_tree
 
 A1 = [2, 5, 9, 5]
 B2 = [3, 3, 4, 1]
@@ -27,5 +28,10 @@ print(B4)
 
 print(johnson(A4, B4))
 
-# Montrer que l'ordonnancement obtenu est 2-approché pour notre problème.
-# Préciserer la complexité de cet algo.
+# Montrer que l'ordonnancement obtenu est 2-approche pour notre probleme.
+# Preciserer la complexite de cet algo.
+
+
+list = [1, 2, 3]
+tree = create_tree(list)
+print_tree(tree)

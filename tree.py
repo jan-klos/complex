@@ -42,20 +42,25 @@ def create_tree(list):
 
 #################################################################
 
-def count_nodes(tree):
-    if node.children = []
+def count_nodes(node, n):
+    if node.children == []:
+        n[0] += 1
+        n[1] += 1
+        return
+    for child in node.children:
+        count_nodes(child, n)
+    n[0] += 1
 
+def print_nodes_number(tree):
+    n = [-1, 0] # tableau parce qu'il est transmis par reference (int par affectation). -1 pour que la racine ne soit pas prise en compte
+    count_nodes(tree, n)
+    print("Nombre de noeuds (feuilles incluses, racine exclue): {0}. Nombre de feuilles: {1}".format(n[0], n[1]))
 
 def print_tree(node):
     if node.children == []:
-        print(node.value, end = " ")
+        #print(node.value, end = " ")
         return
     node.print_children()
     for child in node.children:
         print_tree(child)
 
-
-    Check if the current node is empty / null.
-    Traverse the left subtree by recursively calling the in-order function.
-    Display the data part of the root (or current node).
-    Traverse the right subtree by recursively calling the in-order function.

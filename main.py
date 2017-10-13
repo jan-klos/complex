@@ -1,6 +1,6 @@
 import random
 from johnson import johnson
-from tree import create_tree, print_tree
+from tree import create_tree, print_tree, print_nodes_number
 
 A1 = [2, 5, 9, 5]
 B2 = [3, 3, 4, 1]
@@ -32,6 +32,7 @@ print(johnson(A4, B4))
 # Preciserer la complexite de cet algo.
 
 
-list = [1, 2, 3]
+list = [1, 2, 3, 4]
 tree = create_tree(list)
 print_tree(tree)
+print_nodes_number(tree)

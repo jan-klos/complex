@@ -3,7 +3,7 @@ def mark_in_list(A, B, index):
     B[index] = 99999
 
 
-def johnson(A, B):
+def johnson_algo(A, B):
     G, D = [], []
     while len(set(A)) != 1:
         a_index = A.index(min(A))

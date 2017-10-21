@@ -1,21 +1,21 @@
 import random
-from johnson import johnson_algo
-from tree import create_tree, print_tree, print_number_of_nodes, traverse_tree, ignall_schrage_algo
+from johnson_algo import johnson_algo
+from tree import create_tree, print_tree, print_number_of_nodes, traverse_tree
+from util import read_from_file
+from ignall_schrage_algo import calculate_time, ignall_schrage_algo
 
-A1 = [2, 9, 2]
-B1 = [3, 4, 3]
-C1 = [4, 1, 5]
+filename = 'test.txt'
 
-n = 4 # nombre des taches
+task_num, A1, B1, C1 = read_from_file(filename)
 
 # donnees non-correlees
-A2 = random.sample(range(100), n)
-B2 = random.sample(range(100), n)
-C2 = random.sample(range(100), n)
+A2 = random.sample(range(100), task_num)
+B2 = random.sample(range(100), task_num)
+C2 = random.sample(range(100), task_num)
 
 # correlation sur les durees d'execution
 A3, B3, C3 = [], [], []
-for i in range (0, n):
+for i in range (0, task_num):
     r = random.randint(0, 5)
     A3.append(random.randint(r*20, 20 + r*20))
     B3.append(random.randint(r*20, 20 + r*20))
@@ -23,9 +23,9 @@ for i in range (0, n):
 
 # correlation sur les machines
 a, b, c = 1, 2, 3
-A4 = [random.randint(15*(a - 1) + 1, 15*(a - 1) + 100) for i in range(0, n)]
-B4 = [random.randint(15*(b - 1) + 1, 15*(b - 1) + 100) for i in range(0, n)]
-C4 = [random.randint(15*(c - 1) + 1, 15*(c - 1) + 100) for i in range(0, n)]
+A4 = [random.randint(15*(a - 1) + 1, 15*(a - 1) + 100) for i in range(0, task_num)]
+B4 = [random.randint(15*(b - 1) + 1, 15*(b - 1) + 100) for i in range(0, task_num)]
+C4 = [random.randint(15*(c - 1) + 1, 15*(c - 1) + 100) for i in range(0, task_num)]
 
 #print(johnson_algo(A4, B4))
 
@@ -33,10 +33,25 @@ C4 = [random.randint(15*(c - 1) + 1, 15*(c - 1) + 100) for i in range(0, n)]
 # Preciserer la complexite de cet algo.
 
 
-tree = create_tree([0, 1, 2])
+tree = create_tree(list(range(0, task_num)))
 #print_tree(tree)
 #print_number_of_nodes(tree)
+global last_permutation
 
-ignall_schrage_algo(tree, [], A1, B1, C1, [0])
-print("fdgfg")
+last_permutation = ignall_schrage_algo(tree, A1, B1, C1)
+
+print(last_permutation)
+print(calculate_time(A1, B1, C1, last_permutation))
 #traverse_tree(tree, [], A1, B1, C1)
+pass
+
+
+
+
+
+
+
+
+
+
+

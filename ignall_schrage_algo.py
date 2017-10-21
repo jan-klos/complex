@@ -6,23 +6,43 @@ def calculate_time(A, B, C, order):
     machB = [0 for x in range(0, task_num)]
     machC = [0 for x in range(0, task_num)]
 
+    # order = [x+1 for x in order]
+    #
+    # machA[0] = A[order[0] - 1]
+    # for i in range(1, task_num):
+    #     machA[i] = A[order[i] - 1] + machA[i - 1]
+    #
+    # machB[0] = A[order[0] - 1] + B[order[0] - 1]
+    # for i in range(1, task_num):
+    #     if machB[i - 1] <= machA[i]:
+    #         machB[i] = machA[i] + B[order[i] - 1]
+    #     else:
+    #         machB[i] = machB[i - 1] + B[order[i] - 1]
+    #
+    # machC[0] = A[order[0] - 1] + B[order[0] - 1] + C[order[0] - 1]
+    # for i in range(1, task_num):
+    #     if machC[i - 1] <= machB[i]:
+    #         machC[i] = machB[i] + C[order[i] - 1]
+    #     else:
+    #         machC[i] = machC[i - 1] + C[order[i] - 1]
+
     machA[0] = A[order[0]]
     for i in range(1, task_num):
-        machA[i] = A[order[0]] + machA[i - 1]
+        machA[i] = A[order[i]] + machA[i - 1]
 
     machB[0] = A[order[0]] + B[order[0]]
     for i in range(1, task_num):
         if machB[i - 1] <= machA[i]:
-            machB[i] = machA[i] + B[order[0]]
+            machB[i] = machA[i] + B[order[i]]
         else:
-            machB[i] = machB[i - 1] + B[order[0]]
+            machB[i] = machB[i - 1] + B[order[i]]
 
     machC[0] = A[order[0]] + B[order[0]] + C[order[0]]
     for i in range(1, task_num):
         if machC[i - 1] <= machB[i]:
-            machC[i] = machB[i] + C[order[0]]
+            machC[i] = machB[i] + C[order[i]]
         else:
-            machC[i] = machC[i - 1] + C[order[0]]
+            machC[i] = machC[i - 1] + C[order[i]]
 
     return machC[task_num - 1]
 

@@ -2,7 +2,7 @@ import random
 from johnson_algo import johnson_algo
 from tree import create_tree, print_tree, print_number_of_nodes, traverse_tree
 from util import read_from_file
-from ignall_schrage_algo import calculate_time, ignall_schrage_algo
+from ignall_schrage_algo import calculate_time, ignall_schrage_algo, algo_naif
 
 filename = 'test.txt'
 
@@ -37,11 +37,15 @@ tree = create_tree(list(range(0, task_num)))
 #print_tree(tree)
 #print_number_of_nodes(tree)
 global last_permutation
+best_permutation_naif = algo_naif(tree, A1, B1, C1)
 
-last_permutation = ignall_schrage_algo(tree, A1, B1, C1)
+best_permutation = ignall_schrage_algo(tree, A1, B1, C1)
 
-print(last_permutation)
-print(calculate_time(A1, B1, C1, last_permutation))
+
+print(best_permutation_naif)
+print(calculate_time(A1, B1, C1, best_permutation_naif))
+print(best_permutation)
+print(calculate_time(A1, B1, C1, best_permutation))
 #traverse_tree(tree, [], A1, B1, C1)
 pass
 

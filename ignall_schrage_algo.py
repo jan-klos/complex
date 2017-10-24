@@ -6,7 +6,10 @@ def calculate_time(A, B, C, order):
 
     machA[0] = A[order[0]]
     for i in range(1, task_num):
-        machA[i] = A[order[i]] + machA[i - 1]
+        try:
+            machA[i] = A[order[i]] + machA[i - 1]
+        except IndexError:
+            pass
 
     if B == []:
         return machA[task_num - 1]

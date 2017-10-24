@@ -34,7 +34,7 @@ def calculate_time(A, B, C, order):
 ################################################################
 
 def calculate_borne_inf(permutation, A, B, C):
-    min_ba = min_bb = 99999
+    min_ba = min_bb = 99999999
     nodes_left = [item for item in list(range(0, len(B))) if item not in permutation]
     t_a = calculate_time(A, [], [], permutation)
     t_b = calculate_time(A, B, [], permutation)
@@ -67,7 +67,7 @@ def ignall_schrage_algo(tree, A, B, C):
 def ignall_schrage_algo1(node, current_permutation, A, B, C):
     global best_permutation
     if node.children == []:
-        print("ignall-schrage: feuille")
+        #print("ignall-schrage: feuille")
         if best_permutation == []:
             best_permutation = current_permutation[:] #ceci cree une nouvelle liste et pas une copie par reference
         elif calculate_time(A, B, C, best_permutation) > calculate_time(A, B, C, current_permutation):
@@ -97,7 +97,7 @@ def algo_naif(tree, A, B, C):
 def algo_naif1(node, current_permutation, A, B, C):
     global best_permutation
     if node.children == []:
-        print("Naif: feuille")
+        #print("Naif: feuille")
         if best_permutation == []:
             best_permutation = current_permutation[:] #ceci cree une nouvelle liste et pas une copie par reference
         elif calculate_time(A, B, C, best_permutation) > calculate_time(A, B, C, current_permutation):

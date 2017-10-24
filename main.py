@@ -1,59 +1,65 @@
 import random
 from johnson_algo import johnson_algo
 from tree import create_tree, print_tree, print_number_of_nodes, traverse_tree
-from util import read_from_file
+from data_creating import read_from_file, create_correlation_sur_les_durees_dexecution, create_correlation_sur_les_machines, create_donnees_non_correlees
 from ignall_schrage_algo import calculate_time, ignall_schrage_algo, algo_naif
+from plot import test
+import time
 
 filename = 'test.txt'
 
 task_num, A1, B1, C1 = read_from_file(filename)
 
-# donnees non-correlees
-A2 = random.sample(range(100), task_num)
-B2 = random.sample(range(100), task_num)
-C2 = random.sample(range(100), task_num)
 
-# correlation sur les durees d'execution
-A3, B3, C3 = [], [], []
-for i in range (0, task_num):
-    r = random.randint(0, 5)
-    A3.append(random.randint(r*20, 20 + r*20))
-    B3.append(random.randint(r*20, 20 + r*20))
-    C3.append(random.randint(r*20, 20 + r*20))
-
-# correlation sur les machines
-a, b, c = 1, 2, 3
-A4 = [random.randint(15*(a - 1) + 1, 15*(a - 1) + 100) for i in range(0, task_num)]
-B4 = [random.randint(15*(b - 1) + 1, 15*(b - 1) + 100) for i in range(0, task_num)]
-C4 = [random.randint(15*(c - 1) + 1, 15*(c - 1) + 100) for i in range(0, task_num)]
 
 #print(johnson_algo(A4, B4))
 
 # Montrer que l'ordonnancement obtenu est 2-approche pour notre probleme.
 # Preciserer la complexite de cet algo.
 
+#test([8, 8], [4200, 9])
+
+task_num = 8
+
+A, B, C = create_donnees_non_correlees(task_num)
 
 tree = create_tree(list(range(0, task_num)))
-#print_tree(tree)
-#print_number_of_nodes(tree)
-global last_permutation
-best_permutation_naif = algo_naif(tree, A1, B1, C1)
+n = 10
+time_tab = []
+time_tab_naif = []
+for i in range(0, n):
+    start = time.time()
+    best_permutation = ignall_schrage_algo(tree, A1, B1, C1)
+    end = time.time()
+    time_tab.append(end - start)
 
-best_permutation = ignall_schrage_algo(tree, A1, B1, C1)
+    start = time.time()
+    best_permutation_naif = algo_naif(tree, A1, B1, C1)
+    end = time.time()
+    time_tab_naif.append(end - start)
 
 
-print(best_permutation_naif)
-print(calculate_time(A1, B1, C1, best_permutation_naif))
-print(best_permutation)
-print(calculate_time(A1, B1, C1, best_permutation))
-#traverse_tree(tree, [], A1, B1, C1)
 pass
 
 
 
 
 
-
+#
+# tree = create_tree(list(range(0, task_num)))
+# #print_tree(tree)
+# #print_number_of_nodes(tree)
+# best_permutation_naif = algo_naif(tree, A1, B1, C1)
+#
+# best_permutation = ignall_schrage_algo(tree, A1, B1, C1)
+#
+#
+# print(best_permutation_naif)
+# print(calculate_time(A1, B1, C1, best_permutation_naif))
+# print(best_permutation)
+# print(calculate_time(A1, B1, C1, best_permutation))
+# #traverse_tree(tree, [], A1, B1, C1)
+# pass
 
 
 

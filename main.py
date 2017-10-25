@@ -10,41 +10,39 @@ filename = 'test.txt'
 
 task_num, A1, B1, C1 = read_from_file(filename)
 
-
+n = 100
+max_task_num = 9
 
 #print(johnson_algo(A4, B4))
 
+def mesure_time(create_function, data_type):
+    task_num_tab, mean_time_tab, mean_time_naif_tab = [], [], []
 
+    for j in range(2, max_task_num):
+        task_num = j
+        time_tab, time_tab_naif = [], []
+        tree = create_tree(list(range(0, task_num)))
+        for i in range(0, n):
+            A, B, C = create_function(task_num)
+            start = time.time()
+            ignall_schrage_algo(tree, A, B, C)
+            end = time.time()
+            time_tab.append(end - start)
 
+            start = time.time()
+            algo_naif(tree, A, B, C)
+            end = time.time()
+            time_tab_naif.append(end - start)
 
-n = 100
-task_num_tab, mean_time_tab, mean_time_naif_tab = [], [], []
+        task_num_tab.append(task_num)
+        mean_time_tab.append(sum(time_tab)/n)
+        mean_time_naif_tab.append(sum(time_tab_naif)/n)
 
-for j in range(2, 7):
-    task_num = j
-    time_tab, time_tab_naif = [], []
-    tree = create_tree(list(range(0, task_num)))
-    for i in range(0, n):
-        A, B, C = create_donnees_non_correlees(task_num)
-        start = time.time()
-        best_permutation = ignall_schrage_algo(tree, A, B, C)
-        end = time.time()
-        time_tab.append(end - start)
+    plot(task_num_tab, mean_time_tab, mean_time_naif_tab, 'Moyenne de {0} tests, {1}'.format(n, data_type))
 
-        start = time.time()
-        best_permutation_naif = algo_naif(tree, A, B, C)
-        end = time.time()
-        time_tab_naif.append(end - start)
-
-    task_num_tab.append(task_num)
-    mean_time_tab.append(sum(time_tab)/n)
-    mean_time_naif_tab.append(sum(time_tab_naif)/n)
-
-plot(task_num_tab, mean_time_tab, mean_time_naif_tab, 'Moyenne de {0} tests, donnees non-correlees'.format(n))
-
-pass
-
-
+#mesure_time(create_donnees_non_correlees, 'donnees non-correlees')
+mesure_time(create_correlation_sur_les_durees_dexecution, 'donnees correlees sur les durees d\'execution')
+#mesure_time(create_correlation_sur_les_machines, 'donnees correlees sur les machines')
 
 
 

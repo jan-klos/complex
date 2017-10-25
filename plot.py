@@ -2,6 +2,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 def plot(y, x, z, title):
+    #plt.ion()
+    #plt.figure()
     matplotlib.rcParams['axes.unicode_minus'] = False
     fig, ax = plt.subplots()
     ax.plot(y, x)

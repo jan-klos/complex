@@ -36,7 +36,7 @@ def calculate_time(A, B, C, order):
 
 ################################################################
 
-def calculate_borne_inf(permutation, A, B, C):
+def calculate_borne_inf1(permutation, A, B, C):
     min_ba = min_bb = 99999999
     nodes_left = [item for item in list(range(0, len(B))) if item not in permutation]
     t_a = calculate_time(A, [], [], permutation)
@@ -59,18 +59,63 @@ def calculate_borne_inf(permutation, A, B, C):
     bc = t_c + sum_c
     return max(ba, bb, bc)
 
+################################################################
+
+def calculate_borne_inf2(permutation, A, B, C):
+    nodes_left = [item for item in list(range(0, len(B))) if item not in permutation]
+    t_a = calculate_time(A, [], [], permutation)
+    min = sum_a = sum_c = 0
+    k = -1
+    if nodes_left != []:
+        min = 99999999
+        for i in nodes_left:
+            if A[i] + B[i] + C[i] < min:
+                min = A[i] + B[i] + C[i]
+                k = i
+        for i in nodes_left:
+            if i != k and A[i] <= C[i]:
+                sum_a += A[i]
+            if i != k and A[i] > C[i]:
+                sum_c += C[i]
+    return t_a + min + sum_a + sum_c
+
+################################################################
+
+def calculate_borne_inf3(permutation, A, B, C):
+    nodes_left = [item for item in list(range(0, len(B))) if item not in permutation]
+    t_b = calculate_time(B, [], [], permutation)
+    min = sum_b = sum_c = 0
+    k = -1
+    if nodes_left != []:
+        min = 99999999
+        for i in nodes_left:
+            if A[i] + B[i] + C[i] < min:
+                min = A[i] + B[i] + C[i]
+                k = i
+        for i in nodes_left:
+            if i != k and B[i] <= C[i]:
+                sum_b += B[i]
+            if i != k and B[i] > C[i]:
+                sum_c += C[i]
+    return t_b + min + sum_b + sum_c
+
 #################################################################
 
-def ignall_schrage_algo(tree, A, B, C):
+def ignall_schrage_algo(tree, A, B, C, b):
+    if b == 'b2':
+        borne = calculate_borne_inf2
+    elif b == 'b3':
+        borne = calculate_borne_inf3
+    else:
+        borne = calculate_borne_inf1
     global best_permutation
     best_permutation = []
-    ignall_schrage_algo1(tree, [], A, B, C)
+    traverse_tree(tree, [], A, B, C, borne)
     return best_permutation
 
-def ignall_schrage_algo1(node, current_permutation, A, B, C):
+def traverse_tree(node, current_permutation, A, B, C, borne):
     global best_permutation
     if node.children == []:
-        #print("ignall-schrage: feuille")
         if best_permutation == []:
             best_permutation = current_permutation[:] #ceci cree une nouvelle liste et pas une copie par reference
         elif calculate_time(A, B, C, best_permutation) > calculate_time(A, B, C, current_permutation):
@@ -81,11 +126,11 @@ def ignall_schrage_algo1(node, current_permutation, A, B, C):
         current_permutation.append(child.value)
         if best_permutation != []:
             best_time = calculate_time(A, B, C, best_permutation)
-            borne_inf = calculate_borne_inf(current_permutation, A, B, C)
+            borne_inf = borne(current_permutation, A, B, C)
             if best_time <= borne_inf:
                 current_permutation.pop(-1)
                 continue
-        ignall_schrage_algo1(child, current_permutation, A, B, C)
+        traverse_tree(child, current_permutation, A, B, C, borne)
     if current_permutation != []:
         current_permutation.pop(-1)
 
@@ -100,7 +145,6 @@ def algo_naif(tree, A, B, C):
 def algo_naif1(node, current_permutation, A, B, C):
     global best_permutation
     if node.children == []:
-        #print("Naif: feuille")
         if best_permutation == []:
             best_permutation = current_permutation[:] #ceci cree une nouvelle liste et pas une copie par reference
         elif calculate_time(A, B, C, best_permutation) > calculate_time(A, B, C, current_permutation):
@@ -112,5 +156,3 @@ def algo_naif1(node, current_permutation, A, B, C):
         algo_naif1(child, current_permutation, A, B, C)
     if current_permutation != []:
         current_permutation.pop(-1)
-
-#bruno.escoffier@upmc.fr rapport 3 nov

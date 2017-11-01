@@ -1,7 +1,18 @@
 import matplotlib
 import matplotlib.pyplot as plt
 
-def plot(y, x, z, title):
+def plot_one_curve(y, x, title):
+    #plt.ion()
+    #plt.figure()
+    matplotlib.rcParams['axes.unicode_minus'] = False
+    fig, ax = plt.subplots()
+    ax.plot(y, x)
+    ax.set_title(title)
+    plt.xlabel('Nombre des tâches', fontsize=18)
+    plt.ylabel('Temps [s]', fontsize=16)
+    plt.show()
+
+def plot_two_curves(y, x, z, title):
     #plt.ion()
     #plt.figure()
     matplotlib.rcParams['axes.unicode_minus'] = False
@@ -9,6 +20,6 @@ def plot(y, x, z, title):
     ax.plot(y, x)
     ax.plot(y, z)
     ax.set_title(title)
-    plt.xlabel('Nombre des taches', fontsize=18)
-    plt.ylabel('Temps', fontsize=16)
+    plt.xlabel('Nombre des tâches', fontsize=18)
+    plt.ylabel('Temps [s]', fontsize=16)
     plt.show()
